@@ -10,17 +10,20 @@ public class UsaClasses {
             String nome = JOptionPane.showInputDialog("Digite seu nome:");
             Usuario usuario;
 
-            String tipoUsuario = JOptionPane.showInputDialog("Você é um usuário premium? (sim/não):");
-            switch (tipoUsuario.toLowerCase()) {
-                case "sim":
-                    usuario = new UsuarioPremium(nome);
+            String tipoUsuario;
+            while (true) {
+                tipoUsuario = JOptionPane.showInputDialog("Você é um usuário premium? (sim/não):");
+                if (tipoUsuario != null && (tipoUsuario.equalsIgnoreCase("sim") || tipoUsuario.equalsIgnoreCase("não") || tipoUsuario.equalsIgnoreCase("nao"))) {
                     break;
-                case "não":
-                case "nao":
-                    usuario = new Usuario(nome);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Opção inválida. Tipo de usuário não reconhecido.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Opção inválida. Por favor, responda 'sim' ou 'não'.");
+                }
+            }
+
+            if (tipoUsuario.equalsIgnoreCase("sim")) {
+                usuario = new UsuarioPremium(nome);
+            } else {
+                usuario = new Usuario(nome);
             }
 
             double plastico = solicitarQuantidade("Digite a quantidade de plástico (em kg):");
@@ -50,3 +53,4 @@ public class UsaClasses {
         }
     }
 }
+
